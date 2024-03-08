@@ -1,0 +1,29 @@
+apiVersion: v1
+data:
+  config.yaml: |
+    interval: 30m
+    notify:
+      dingtalk:
+        url: ""
+        secret: ""
+        mention: ""
+        message: ""
+    evaluate:
+      type: include
+      data:
+        receiver: dead-mans-switch
+        status: firing
+        alerts:
+          - status: firing
+            labels:
+              alertname: Watchdog
+              cloud: 
+              cluster: 
+              env: 
+              origin_prometheus: 
+              project: 
+              severity: 
+kind: ConfigMap
+metadata:
+  name: dead-mans-switch-config
+  namespace: monitoring

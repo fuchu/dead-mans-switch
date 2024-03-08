@@ -1,0 +1,22 @@
+interval: 30s
+notify:
+  dingtalk:
+    url: ""
+    secret: ""
+    mention: ""
+    message: ""
+evaluate:
+  type: include
+  data:
+    receiver: dead-mans-switch
+    status: firing
+    alerts:
+      - status: firing
+        labels:
+          alertname: Watchdog
+          cloud: A
+          cluster: machine
+          env: prod
+          origin_prometheus: A
+          project: A
+          severity: critical

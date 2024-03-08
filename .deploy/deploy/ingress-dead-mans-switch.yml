@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dead-mans-switch
+  namespace: monitoring
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Real-IP $remote_addr";
+      more_set_headers "X-Real-Port $remote_port";
+      more_set_headers "X-Forwarded-For $proxy_add_x_forwarded_for";
+    nginx.ingress.kubernetes.io/proxy-body-size: 5m
+    nginx.ingress.kubernetes.io/proxy-buffering: "off"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: 60s
+    nginx.ingress.kubernetes.io/proxy-send-timeout: 60s
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: ""
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: dead-mans-switch
+            port:
+              number: 8080
